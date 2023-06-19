@@ -1,0 +1,41 @@
+name: Push Docker to GCR GitHub Action
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  build-and-push-to-gcr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Authenticate to Google Cloud
+      id: auth
+      uses: google-github-actions/auth@v1
+      with:        
+        token_format: 'access_token'
+        workload_identity_provider: projects/782463946337/locations/global/workloadIdentityPools/github-actions/providers/github
+        service_account: github-actions@citros.iam.gserviceaccount.com
+          
+    - name: Authenticate docker to Artifact Registry
+      run: |
+        gcloud config set project citros
+        gcloud config set artifacts/repository citros-py
+        gcloud config set artifacts/location us-central1
+        gcloud config set account github-actions@citros.iam.gserviceaccount.com
+
+        gcloud auth configure-docker us-central1-docker.pkg.dev   
+        
+    - name: Build Package [citros-gitolite]
+      run: |        
+        docker build -t citros-gitolite .         
+
+    - name: Upload [citros-gitolite] to Artifact Registry
+      run: |
+        docker tag citros-gitolite us-central1-docker.pkg.dev/citros/citros-docker/citros-gitolite
+        docker push us-central1-docker.pkg.dev/citros/citros-docker/citros-gitolite
+        
