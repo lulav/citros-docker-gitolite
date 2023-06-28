@@ -43,3 +43,24 @@ Finally run your Gitolite container in the background:
         docker run -d --name gitolite -p 22:22 --volumes-from gitolite-data jgiannuzzi/gitolite
 
 You can then add users and repos by following the [official guide](https://github.com/sitaramc/gitolite#adding-users-and-repos).
+
+
+
+
+## gcloud: docker
+
+https://console.cloud.google.com/artifacts/browse/citros?project=citros&supportedpurview=project
+
+```bash
+# if building from linux machine
+docker build -t citros-docker-gitolite . 
+# *** when building from MAC M1 chip add FROM --platform=linux/amd64 ***
+docker buildx build --platform linux/amd64 -t citros-docker-gitolite .   
+
+docker tag citros-docker-gitolite registry.local:32000/citros/citros-docker/citros-docker-gitolite
+docker push registry.local:32000/citros/citros-docker/citros-docker-gitolite
+
+# upload to google artifact registry
+docker tag citros-docker-gitolite us-central1-docker.pkg.dev/citros/citros-docker/citros-docker-gitolite
+docker push us-central1-docker.pkg.dev/citros/citros-docker/citros-docker-gitolite
+```
