@@ -30,12 +30,12 @@ jobs:
 
         gcloud auth configure-docker us-central1-docker.pkg.dev   
         
-    - name: Build Package [citros-gitolite]
+    - name: Build Package [citros-gitolite-docker]
       run: |        
-        docker build -t citros-gitolite .         
+        docker build -t citros-gitolite-docker .         
 
-    - name: Upload [citros-gitolite] to Artifact Registry
+    - name: Upload [citros-gitolite-docker] to Artifact Registry
       run: |
-        docker tag citros-gitolite us-central1-docker.pkg.dev/citros/citros-docker/citros-gitolite
-        docker push us-central1-docker.pkg.dev/citros/citros-docker/citros-gitolite
+        docker tag citros-gitolite-docker us-central1-docker.pkg.dev/citros/citros-docker/citros-gitolite-docker
+        docker push us-central1-docker.pkg.dev/citros/citros-docker/citros-gitolite-docker
         
