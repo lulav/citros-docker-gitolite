@@ -15,6 +15,16 @@ if [ "${1}" = 'sshd' ]; then
   perl -i -pe 's/^#?((?!Kerberos|GSSAPI)\w*Authentication)\s.*/\1 no/; s/^(PubkeyAuthentication) no/\1 yes/' /etc/ssh/sshd_config
   # Disable sftp subsystem
   perl -i -pe 's/^(Subsystem\ssftp\s)/#\1/' /etc/ssh/sshd_config
+
+  # https://jasonhzy.github.io/2016/02/03/ssh-alive/
+  # Enable keep alive
+  perl -i -pe 's/^#(ClientAliveInterval) 0/$1 300/' /etc/ssh/sshd_config
+  perl -i -pe 's/^#(ClientAliveCountMax) 0/$3 2/' /etc/ssh/sshd_config
+
+  perl -i -pe 's/^#(UseDNS) no/\1 no/' /etc/ssh/sshd_config
+
+  # echo "Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-cbc,aes256-cbc,chacha20-poly1305@openssh.com,3des-cbc" >> /etc/ssh/sshd_config
+
 fi
 
 # Fix permissions at every startup
