@@ -25,6 +25,10 @@ if [ "${1}" = 'sshd' ]; then
 
   # echo "Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-cbc,aes256-cbc,chacha20-poly1305@openssh.com,3des-cbc" >> /etc/ssh/sshd_config
 
+  # https://man7.org/linux/man-pages/man5/sshd_config.5.html
+  # maximize connections
+  perl -i -pe 's/^#(MaxSessions) 10/\1 1024/' /etc/ssh/sshd_config
+  perl -i -pe 's/^#(MaxStartups) 10:30:100/\1 1024/' /etc/ssh/sshd_config
 fi
 
 # Fix permissions at every startup
