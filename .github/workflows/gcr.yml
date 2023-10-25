@@ -36,6 +36,6 @@ jobs:
 
     - name: Upload [citros-gitolite-docker] to Artifact Registry
       run: |
-        docker tag citros-gitolite-docker us-central1-docker.pkg.dev/citros/citros-docker/citros-gitolite-docker
-        docker push us-central1-docker.pkg.dev/citros/citros-docker/citros-gitolite-docker
+        docker tag citros-gitolite-docker us-central1-docker.pkg.dev/citros/citros-prod-registry/citros-gitolite-docker
+        docker push us-central1-docker.pkg.dev/citros/citros-prod-registry/citros-gitolite-docker
         
