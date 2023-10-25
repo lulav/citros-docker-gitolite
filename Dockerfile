@@ -1,5 +1,17 @@
 FROM alpine:latest
 
+# RUN apk add shadow
+# ARG UNAME=git
+# ARG UID=1000
+# ARG GID=1001
+# RUN groupadd -g $GID -o $UNAME
+# RUN useradd -m -u $UID -g $GID -o -s /bin/sh -d /var/lib/git -p "" $UNAME
+
+# RUN set -x \
+#  && apk add --no-cache gitolite openssh 
+
+# USER $UNAME
+
 # Install OpenSSH server and Gitolite
 # Unlock the automatically-created git user
 RUN set -x \
